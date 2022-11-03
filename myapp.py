@@ -1,24 +1,13 @@
-import os
-import datetime
 import warnings
 warnings.filterwarnings('ignore')
-import gc
-import json
 
 import pandas as pd
-import numpy as np
-import geopandas as gpd
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, Div, Select, Slider, TextInput, Label, RadioButtonGroup, TableColumn, Button
-from bokeh.models import NumberFormatter, CustomJS
+from bokeh.models import NumberFormatter
 from bokeh.plotting import figure
-from bokeh.sampledata.movies_data import movie_path
-from bokeh.io import curdoc, show
-from bokeh.application import Application
-from bokeh.application.handlers import FunctionHandler
+from bokeh.io import curdoc
 from bokeh.models.widgets import DataTable
-
-from utils import process_data
 
 # Loading data 
 df_source = pd.read_csv('data/source.csv')
