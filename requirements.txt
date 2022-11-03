@@ -2,3 +2,4 @@ anaconda
 bokeh==2.2.1
 geopandas==0.12.1
 Jinja2==2.11.3
+MarkupSafe==1.1.1
