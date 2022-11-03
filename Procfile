@@ -1,1 +1,1 @@
-web: bokeh serve --port=$PORT --address=0.0.0.0 --allow-websocket-origin=green-economy-bokeh-dashboard.herokuapp.com --use-xheaders myapp.py
+web: bokeh serve --port=$PORT --address=0.0.0.0 --allow-websocket-origin=green-economy.herokuapp.com --use-xheaders myapp.py
