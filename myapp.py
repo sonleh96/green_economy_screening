@@ -82,8 +82,8 @@ botright1 = Label(x=90, y=-3, x_units='data', y_units='data',text='Bad Economy',
 botright2 = Label(x=90, y=-5, x_units='data', y_units='data',text='Green Environment ', render_mode='css',text_color='green', 
                   text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-p.add_layout(Title(text="Environment Score", align="center", text_font_size='20px'), "below")
-p.add_layout(Title(text="Economic Score", align="center", text_font_size='20px'), "left")
+p.add_layout(Title(text="Environment Score", align="center", text_font_size='17px'), "below")
+p.add_layout(Title(text="Economic Score", align="center", text_font_size='17px'), "left")
 p.add_layout(BoxAnnotation(bottom=50, left=50, fill_alpha=0.1, fill_color='green'))
 p.add_layout(BoxAnnotation(top=50, right=50, fill_alpha=0.1, fill_color='red'))
 p.add_layout(BoxAnnotation(bottom=50, right=50, fill_alpha=0.1, fill_color='yellow'))
