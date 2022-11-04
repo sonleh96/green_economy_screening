@@ -4,7 +4,7 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, Div, Select, Slider, TextInput, Label, RadioButtonGroup, TableColumn, Button
-from bokeh.models import NumberFormatter
+from bokeh.models import NumberFormatter, Title, BoxAnnotation
 from bokeh.plotting import figure
 from bokeh.io import curdoc
 from bokeh.models.widgets import DataTable
@@ -12,6 +12,8 @@ from bokeh.models.widgets import DataTable
 # Loading data 
 df_source = pd.read_csv('data/source.csv')
 # Creating dashboard 
+desc = Div(text=open("description.html").read(), sizing_mode="stretch_width")
+
 region_list = ['All']
 region_list.extend(list(df_source.REGION_NAME.unique()))
 
@@ -33,7 +35,7 @@ columns = [
         ]
 source_table = DataTable(source=source, name="Table", 
                          columns=columns,
-                         width=400, height=800)
+                         width=400, height=250)
 source_table_div = Div(text="Score Table (Command + Click to deselect)",
                        width=400, align='start')
 reset_button = Button(label="Refresh Button", width=400)
@@ -50,43 +52,44 @@ TOOLTIPS=[
 
 p = figure(height=600, width=600, toolbar_location='above', 
            tooltips=TOOLTIPS, sizing_mode="scale_both",
-           x_range=(-5.0, 105.0), y_range=(-5.0, 105.0),
-           x_axis_label='Environment Score', y_axis_label='Economic Score',
-           tools='reset, pan')
+           x_range=(-5.0, 105.0), y_range=(-5, 105.0),
+           tools='reset, pan, box_zoom, wheel_zoom, save')
 p.circle(x="ENVR_SCORE", y="ECON_SCORE", source=source, size=4, 
          line_color=None, color="COLOR", alpha=3)
 
 p.xaxis.fixed_location = 50.0
 p.yaxis.fixed_location = 50.0
+p.xgrid.grid_line_color = None
+p.ygrid.grid_line_color = None
 
-x_label = Label(x=480, y=-0.4, x_units='screen', y_units='screen', text='Environment Score',render_mode='css', text_color='black', 
-                text_font_size='15px', border_line_color='white', border_line_alpha=0, background_fill_color='white', 
-                background_fill_alpha=1.0)
-y_label = Label(x=18, y=480, x_units='screen', y_units='screen', text='Economic Score',render_mode='css', text_color='Black', 
-                text_font_size='15px', border_line_color='white', border_line_alpha=0, background_fill_color='white', 
-                background_fill_alpha=1.0, angle=90, angle_units='deg')
+topleft1 = Label(x=-5, y=102, x_units='data', y_units='data', text='Good Economy',render_mode='css', text_color='green', level='underlay',
+                 text_font_size='15px', border_line_color='white', border_line_alpha=0, background_fill_color='white', background_fill_alpha=0)
+topleft2 = Label(x=-5, y=100, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
+                 text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-topleft1 = Label(x=50, y=1055, x_units='screen', y_units='screen', text='Good Economy',render_mode='css', text_color='green', 
-                 text_font_size='10px', border_line_color='white', border_line_alpha=0, background_fill_color='white', background_fill_alpha=0)
-topleft2 = Label(x=50, y=1045, x_units='screen', y_units='screen',text='Brown Environment ', render_mode='css',text_color='red', 
-                 text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+topright1 = Label(x=90, y=102, x_units='data', y_units='data',text='Good Economy',render_mode='css',text_color='green', 
+                  text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+topright2 = Label(x=90, y=100, x_units='data', y_units='data',text='Green Environment ',render_mode='css',text_color='green',
+                  text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-topright1 = Label(x=950, y=1055, x_units='screen', y_units='screen',text='Good Economy',render_mode='css',text_color='green', 
-                  text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-topright2 = Label(x=950, y=1045, x_units='screen', y_units='screen',text='Green Environment ',render_mode='css', 
-                  text_color='green', text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+botleft1 = Label(x=-5, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
+                 text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+botleft2 = Label(x=-5, y=-5, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
+                 text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-botleft1 = Label(x=50, y=10, x_units='screen', y_units='screen',text='Bad Economy', render_mode='css',text_color='red', 
-                 text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-botleft2 = Label(x=50, y=0, x_units='screen', y_units='screen',text='Brown Environment ', render_mode='css',text_color='red', 
-                 text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+botright1 = Label(x=90, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
+                  text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+botright2 = Label(x=90, y=-5, x_units='data', y_units='data',text='Green Environment ', render_mode='css',text_color='green', 
+                  text_font_size='15px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-botright1 = Label(x=950, y=10, x_units='screen', y_units='screen',text='Bad Economy', render_mode='css',text_color='red', 
-                  text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-botright2 = Label(x=950, y=0, x_units='screen', y_units='screen',text='Green Environment ', render_mode='css',text_color='green', 
-                  text_font_size='10px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
+p.add_layout(Title(text="Environment Score", align="center", text_font_size='20px'), "below")
+p.add_layout(Title(text="Economic Score", align="center", text_font_size='20px'), "left")
+p.add_layout(BoxAnnotation(bottom=50, left=50, fill_alpha=0.1, fill_color='green'))
+p.add_layout(BoxAnnotation(top=50, right=50, fill_alpha=0.1, fill_color='red'))
+p.add_layout(BoxAnnotation(bottom=50, right=50, fill_alpha=0.1, fill_color='yellow'))
+p.add_layout(BoxAnnotation(top=50, left=50, fill_alpha=0.1, fill_color='yellow'))
 
-for citation in [x_label, y_label, topleft1, topleft2, topright1, topright2, botleft1, botleft2, botright1, botright2]:
+for citation in [topleft1, topleft2, topright1, topright2, botleft1, botleft2, botright1, botright2]:
     p.add_layout(citation)
 
 def select_region():
@@ -118,7 +121,6 @@ def select_region():
 def update():
     df_sel = select_region()
     
-    p.title.text = "%d data points" % len(df_sel)
     source.data = dict(
         ENVR_SCORE=df_sel["ENVR_SCORE"],
         ECON_SCORE=df_sel["ECON_SCORE"],
@@ -160,11 +162,10 @@ controls = [region, province, district, ur_zone, year,
 
 inputs = column(*controls, width=320)
 
-l = column(row(p, inputs), sizing_mode="scale_both")
+l = column(desc, row(p, inputs), sizing_mode="scale_both")
 
 update()  # initial load of the data
 # reset_button.on_click(reset)
 
 curdoc().add_root(l)
 curdoc().title = "Green Economy"
-
