@@ -221,7 +221,7 @@ controls = [region, province, ur_zone, year,
 
 inputs = column(*controls, width=320)
 
-l = column(desc, row(column(p, ts, sizing_mode="scale_both"), inputs), "scale_both")
+l = row(column(p, ts, sizing_mode="scale_both"), inputs)
 
 # l = column(desc, row(p, inputs), sizing_mode="scale_both")
 
