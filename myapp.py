@@ -112,7 +112,7 @@ source_line = ColumnDataSource(data=dict(
 TOOLTIPS_LINE=[
     ("Economic Score", "@SCORE_1"),
     ("Environment Score", "@SCORE_2"),
-    ("Year", "@YEAR")
+    ("Year", "@TIME")
 ]
 
 ts = figure(height=300, width=600, toolbar_location='above', tooltips=TOOLTIPS_LINE,
@@ -125,7 +125,7 @@ ts.line(x="TIME", y="SCORE_2", line_color='green', source=source_line,
 
 ts.xgrid.grid_line_color = None
 ts.ygrid.grid_line_color = None
-ts.legend.location = 'center_left'
+ts.legend.location = 'top_right'
 
 def select_region():
     region_val = region.value
