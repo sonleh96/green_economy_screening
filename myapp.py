@@ -44,7 +44,7 @@ columns = [
 
 source_table = DataTable(source=source, name="Table", 
                          columns=columns,
-                         width=400, height=710)
+                         width=400, height=740)
 source_table_div = Div(text="Score Table (Command + Click to deselect)",
                        width=400, align='start')
 reset_button = Button(label="Refresh Button", width=400)
