@@ -44,7 +44,7 @@ columns = [
 
 source_table = DataTable(source=source, name="Table", 
                          columns=columns,
-                         width=400, height=700)
+                         width=400, height=710)
 source_table_div = Div(text="Score Table (Command + Click to deselect)",
                        width=400, align='start')
 reset_button = Button(label="Refresh Button", width=400)
@@ -58,7 +58,7 @@ axis_map = {
 
 x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Environment Score")
 
-space_div = Div(text="", height=10, align='start')
+space_div = Div(text="", height=20, align='start')
 
 TOOLTIPS_SCATTER=[
     ("Province", "@NAME_1"),
@@ -77,9 +77,9 @@ p.circle(x="x", y="y", source=source, size=4,
 p.xgrid.grid_line_color = None
 p.ygrid.grid_line_color = None
 
-topleft1 = Label(x=-5, y=102, x_units='data', y_units='data', text='Good Economy',render_mode='css', text_color='green', level='underlay',
+topleft1 = Label(x=-4, y=102, x_units='data', y_units='data', text='Good Economy',render_mode='css', text_color='green', level='underlay',
                  text_font_size='12px', border_line_color='white', border_line_alpha=0, background_fill_color='white', background_fill_alpha=0)
-topleft2 = Label(x=-5, y=100, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
+topleft2 = Label(x=-4, y=100, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
                  text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
 topright1 = Label(x=92, y=102, x_units='data', y_units='data',text='Good Economy',render_mode='css',text_color='green', 
@@ -87,9 +87,9 @@ topright1 = Label(x=92, y=102, x_units='data', y_units='data',text='Good Economy
 topright2 = Label(x=92, y=100, x_units='data', y_units='data',text='Green Environment ',render_mode='css',text_color='green',
                   text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-botleft1 = Label(x=-5, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
+botleft1 = Label(x=-4, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
                  text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-botleft2 = Label(x=-5, y=-5, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
+botleft2 = Label(x=-4, y=-5, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
                  text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
 botright1 = Label(x=92, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
