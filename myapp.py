@@ -56,7 +56,7 @@ axis_map = {
     "Temperature Score": "TEMP_SCORE"
 }
 
-x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Environmental Score")
+x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Environment Score")
 
 space_div = Div(text="", height=10, align='start')
 
