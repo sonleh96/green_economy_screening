@@ -32,10 +32,6 @@ source = ColumnDataSource(data=dict(x=[], y=[],
                                     ECON_SCORE=[], ENVR_SCORE=[], FOREST_SCORE=[], AIR_SCORE=[], TEMP_SCORE=[],
                                     YEAR=[], NAME_1=[], NAME_2=[], REGION_NAME=[], POP_ZONE=[], COLOR=[]))
 
-source_line = ColumnDataSource(data=dict(
-                                    SCORE_1=[], SCORE_2=[],
-                                    TIME=[], ZONE=[]))
-
 columns = [
             TableColumn(field="NAME_1", title="Province"),
             TableColumn(field="NAME_2", title="District"),
@@ -48,13 +44,13 @@ columns = [
 
 source_table = DataTable(source=source, name="Table", 
                          columns=columns,
-                         width=400, height=250)
+                         width=400, height=700)
 source_table_div = Div(text="Score Table (Command + Click to deselect)",
                        width=400, align='start')
 reset_button = Button(label="Refresh Button", width=400)
 
 axis_map = {
-    "Environmental Score": "ENVR_SCORE",
+    "Environment Score": "ENVR_SCORE",
     "Deforestation Score": "FOREST_SCORE",
     "Air Pollution Score": "AIR_SCORE",
     "Temperature Score": "TEMP_SCORE"
@@ -64,7 +60,7 @@ x_axis = Select(title="X Axis", options=sorted(axis_map.keys()), value="Environm
 
 space_div = Div(text="", height=10, align='start')
 
-TOOLTIPS=[
+TOOLTIPS_SCATTER=[
     ("Province", "@NAME_1"),
     ("District", "@NAME_2"),
     ("Region", "@REGION_NAME"),
@@ -72,7 +68,7 @@ TOOLTIPS=[
 ]
 
 p = figure(height=600, width=600, toolbar_location='above', 
-           tooltips=TOOLTIPS, sizing_mode="scale_both",
+           tooltips=TOOLTIPS_SCATTER, sizing_mode="scale_both",
            x_range=(-5.0, 105.0), y_range=(-5, 105.0),
            tools='reset, pan, box_zoom, wheel_zoom, save')
 p.circle(x="x", y="y", source=source, size=4, 
@@ -86,9 +82,9 @@ topleft1 = Label(x=-5, y=102, x_units='data', y_units='data', text='Good Economy
 topleft2 = Label(x=-5, y=100, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
                  text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-topright1 = Label(x=84, y=102, x_units='data', y_units='data',text='Good Economy',render_mode='css',text_color='green', 
+topright1 = Label(x=92, y=102, x_units='data', y_units='data',text='Good Economy',render_mode='css',text_color='green', 
                   text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-topright2 = Label(x=84, y=100, x_units='data', y_units='data',text='Green Environment ',render_mode='css',text_color='green',
+topright2 = Label(x=92, y=100, x_units='data', y_units='data',text='Green Environment ',render_mode='css',text_color='green',
                   text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
 botleft1 = Label(x=-5, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
@@ -96,9 +92,9 @@ botleft1 = Label(x=-5, y=-3, x_units='data', y_units='data',text='Bad Economy', 
 botleft2 = Label(x=-5, y=-5, x_units='data', y_units='data',text='Brown Environment ', render_mode='css',text_color='red', 
                  text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
-botright1 = Label(x=84, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
+botright1 = Label(x=92, y=-3, x_units='data', y_units='data',text='Bad Economy', render_mode='css',text_color='red', 
                   text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
-botright2 = Label(x=84, y=-5, x_units='data', y_units='data',text='Green Environment ', render_mode='css',text_color='green', 
+botright2 = Label(x=92, y=-5, x_units='data', y_units='data',text='Green Environment ', render_mode='css',text_color='green', 
                   text_font_size='12px',border_line_color='white', border_line_alpha=0,background_fill_color='white', background_fill_alpha=0)
 
 p.add_layout(BoxAnnotation(bottom=50, left=50, fill_alpha=0.1, fill_color='green'))
@@ -109,14 +105,23 @@ p.add_layout(BoxAnnotation(top=50, left=50, fill_alpha=0.1, fill_color='yellow')
 for citation in [topleft1, topleft2, topright1, topright2, botleft1, botleft2, botright1, botright2]:
     p.add_layout(citation)
     
-    
-ts = figure(height=300, width=600, toolbar_location='above', 
+source_line = ColumnDataSource(data=dict(
+                                    SCORE_1=[], SCORE_2=[],
+                                    TIME=[], ZONE=[]))
+
+TOOLTIPS_LINE=[
+    ("Economic Score", "@SCORE_1"),
+    ("Environment Score", "@SCORE_2"),
+    ("Year", "@YEAR")
+]
+
+ts = figure(height=300, width=600, toolbar_location='above', tooltips=TOOLTIPS_LINE,
             x_range=(min_year-1,max_year+1), sizing_mode="scale_both",
             tools='reset, pan, box_zoom, wheel_zoom, save')
 ts.line(x="TIME", y="SCORE_1", source=source_line,
-        legend_label="Economic Score", line_color="orange", line_width=3)
+        legend_label="Economic", line_color="orange", line_width=3)
 ts.line(x="TIME", y="SCORE_2", line_color='green', source=source_line,
-        legend_label="Environmental Score", line_width=3)
+        legend_label="Environment", line_width=3)
 
 ts.xgrid.grid_line_color = None
 ts.ygrid.grid_line_color = None
@@ -125,7 +130,6 @@ ts.legend.location = 'center_left'
 def select_region():
     region_val = region.value
     province_val = province.value.strip()
-    # district_val = district.value.strip()
     ur_zone_val = ur_zone.active
     
     selected = df_source[
@@ -135,8 +139,6 @@ def select_region():
         selected = selected[selected.REGION_NAME.str.contains(region_val)==True]
     if (province_val != "All"):
         selected = selected[selected.NAME_1.str.contains(province_val)==True]
-    # if (district_val != "All"):
-    #     selected = selected[selected.NAME_2.str.contains(district_val)==True]
     if (ur_zone_val == 0):
         selected = selected[selected.POP_ZONE == 'total']
     elif (ur_zone_val == 1):
@@ -221,7 +223,7 @@ controls = [region, province, ur_zone, year,
 
 inputs = column(*controls, width=320)
 
-l = row(column(p, ts, sizing_mode="scale_both"), inputs)
+l = column(desc, row(column(p, ts, sizing_mode="scale_both"), inputs))
 
 # l = column(desc, row(p, inputs), sizing_mode="scale_both")
 
