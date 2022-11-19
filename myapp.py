@@ -10,7 +10,7 @@ from bokeh.io import curdoc
 from bokeh.models.widgets import DataTable
 
 # Loading data 
-df_source = pd.read_csv('data/source_v2.csv')
+df_source = pd.read_csv('data/source_v3.csv')
 # Creating dashboard 
 desc = Div(text=open("description.html").read(), sizing_mode="stretch_width")
 
